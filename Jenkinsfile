@@ -1,5 +1,12 @@
 pipeline {
 	agent any
+
+	environment {
+        DOCKER_REPO = "calculator-test"
+        APP_JAR = "target\\Calculator-v1.jar"
+        DOCKER_CREDENTIALS_ID = "dockerhub-credentials"
+        DOCKER_HOST_PORT = "8080"
+    }
 	
 	stages {
 		stage('Checkout'){
