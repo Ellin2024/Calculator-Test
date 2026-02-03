@@ -63,7 +63,7 @@ pipeline {
                     // Build Docker image and tag it with build number
                     def imageTag = "${env.BUILD_NUMBER}"
                     sh "docker build -t ${DOCKER_REPO}:${imageTag} ."
-                    sh "docker tag ${DOCKER_REPO}:${imageTag} ${DOCKER_REPO}:latest"
+                    sh "docker tag ${DOCKER_REPO}:${imageTag} ${DOCKER_REPO}:v1"
                     env.IMAGE_TAG = imageTag
                 }
             }
@@ -71,7 +71,7 @@ pipeline {
         
         stage('Run Docker Container') {
         steps {
-            echo 'Running container locally (port 8080)...'
+            echo 'Running container locally (port 7070)...'
             sh '''
                 docker stop calculator-test || true
                 docker rm calculator-test || true
