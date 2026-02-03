@@ -22,10 +22,20 @@ pipeline {
 		
 		stage('Unit Test'){
 			steps{
-				sh 'mvn test'
-				junit 'target/surefire-reports/*.xml'
+				sh 'mvn test'	
 			}
+			 post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
 		}
+
+		stage('JaCoCo Report') {
+            steps {
+                sh 'mvn jacoco:report'
+            }
+        }
 
 		// stage('JaCoCo Report') {
   //           steps {
