@@ -32,35 +32,35 @@ pipeline {
             }
 		}
 
-		stage('JaCoCo Report') {
-            steps {
-                sh 'mvn jacoco:report'
-            }
-        }
-
 		// stage('JaCoCo Report') {
   //           steps {
-  //               // Publish JaCoCo HTML report in Jenkins
-  //               publishHTML([
-  //                   allowMissing: false,
-  //                   alwaysLinkToLastBuild: true,
-  //                   keepAll: true,
-  //                   reportDir: 'target/site/jacoco',
-  //                   reportFiles: 'index.html',
-  //                   reportName: 'JaCoCo Coverage'
-  //               ])
+  //               sh 'mvn jacoco:report'
   //           }
   //       }
-  //       stage("Static Code Analysis (Checkstyle)") {
-  //           steps {
-  //               sh "mvn checkstyle:checkstyle"
-  //               publishHTML(target: [
-  //                   reportDir: 'target/site',
-  //                   reportFiles: 'checkstyle.html',
-  //                   reportName: 'Checkstyle Report'
-  //               ])
-  //           }
-  //       }
+
+		stage('JaCoCo Report') {
+            steps {
+                // Publish JaCoCo HTML report in Jenkins
+                publishHTML([
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: 'target/site/jacoco',
+                    reportFiles: 'index.html',
+                    reportName: 'JaCoCo Coverage'
+                ])
+            }
+        }
+        stage("Static Code Analysis (Checkstyle)") {
+            steps {
+                sh "mvn checkstyle:checkstyle"
+                publishHTML(target: [
+                    reportDir: 'target/site',
+                    reportFiles: 'checkstyle.html',
+                    reportName: 'Checkstyle Report'
+                ])
+            }
+        }
 		
 		stage('Build Jar'){
 			steps{
