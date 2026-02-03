@@ -23,7 +23,7 @@ pipeline {
 		stage('Unit Test'){
 			steps{
 				sh 'mvn test'
-				junit allowEmptyResults: false, testResults: 'target/surefire-reports/*.xml'
+				junit 'target/surefire-reports/*.xml'
 			}
 		}
 
