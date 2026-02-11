@@ -7,7 +7,8 @@ pipeline {
     }
 
 	environment {
-        DOCKER_REPO = "yym-calculator-demo"
+        DOCKER_IMG = "yym-calculator-image"
+		DOCKER_CON = "yym-calculator-container"
         APP_JAR = "target\\Calculator-v1.jar"
         DOCKER_CREDENTIALS_ID = "dockerhub-credentials"
         DOCKER_HOST_PORT = "7070"
@@ -73,8 +74,8 @@ pipeline {
                 script {
                     // Build Docker image and tag it with build number
                     def imageTag = "${env.BUILD_NUMBER}"
-                    sh "docker build -t ${DOCKER_REPO}:${imageTag} ."
-                    sh "docker tag ${DOCKER_REPO}:${imageTag} ${DOCKER_REPO}:v1"
+                    sh "docker build -t ${env.DOCKER_IMG}:${imageTag} ."
+                    sh "docker tag ${env.DOCKER_IMG}:${imageTag} ${env.DOCKER_IMG}:v1"
                     env.IMAGE_TAG = imageTag
                 }
             }
@@ -84,9 +85,9 @@ pipeline {
         steps {
             echo 'Running container locally (port 7070)...'
             sh '''
-                docker stop yym-calculator-demo || true
-                docker rm yym-calculator-demo || true
-                docker run -d --name yym-calculator-demo -p 7070:8080 yym-calculator-demo-:v1
+                docker stop ${env.DOCKER_CON} || true
+                docker rm ${DOCKER_CON} || true
+                docker run -d --name ${env.DOCKER_CON} -p 7070:8080 ${env.DOCKER_IMG}:v1
             '''
         }    
     }
@@ -96,7 +97,7 @@ pipeline {
               echo "✅ Pipeline finished."
           }
           success {
-             echo "Pipeline succeeded! App running at http://localhost:${env.DOCKER_HOST_PORT}/"
+             echo "Pipeline succeeded! App running at http://150.95.84.29:${env.DOCKER_HOST_PORT}/"
           }
           failure {
               echo "Pipeline failed."
