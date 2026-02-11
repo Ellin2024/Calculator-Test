@@ -7,7 +7,7 @@ pipeline {
     }
 
 	environment {
-        DOCKER_REPO = "calculator-test"
+        DOCKER_REPO = "yym-calculator-demo"
         APP_JAR = "target\\Calculator-v1.jar"
         DOCKER_CREDENTIALS_ID = "dockerhub-credentials"
         DOCKER_HOST_PORT = "7070"
@@ -74,7 +74,7 @@ pipeline {
                     // Build Docker image and tag it with build number
                     def imageTag = "${env.BUILD_NUMBER}"
                     sh "docker build -t ${DOCKER_REPO}:${imageTag} ."
-                    sh "docker tag ${DOCKER_REPO}:${imageTag} yym-calculator:v1"
+                    sh "docker tag ${DOCKER_REPO}:${imageTag} ${DOCKER_REPO}:v1"
                     env.IMAGE_TAG = imageTag
                 }
             }
