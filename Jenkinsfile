@@ -69,25 +69,39 @@ pipeline {
 			}
 		}
 		
+		//Using Env
+		// stage('Build Docker Image') {
+  //           steps {
+  //               script {
+  //                   // Build Docker image and tag it with build number
+  //                   def imageTag = "${env.BUILD_NUMBER}"
+  //                   sh "docker build -t ${env.DOCKER_IMG}:${imageTag} ."
+  //                   sh "docker tag ${env.DOCKER_IMG}:${imageTag} ${env.DOCKER_IMG}:v1"
+  //                   env.IMAGE_TAG = imageTag
+  //               }
+  //           }
+  //       }
+
+		//Without using Env
 		stage('Build Docker Image') {
             steps {
                 script {
                     // Build Docker image and tag it with build number
                     def imageTag = "${env.BUILD_NUMBER}"
-                    sh "docker build -t ${env.DOCKER_IMG}:${imageTag} ."
-                    sh "docker tag ${env.DOCKER_IMG}:${imageTag} ${env.DOCKER_IMG}:v1"
+                    sh "docker build -t yym-calcu-image:v1 ."
                     env.IMAGE_TAG = imageTag
                 }
             }
         }
         
+        
         stage('Run Docker Container') {
         steps {
             echo 'Running container locally (port 7070)...'
             sh '''
-                docker stop ${env.DOCKER_CON} || true
-                docker rm ${DOCKER_CON} || true
-                docker run -d --name ${env.DOCKER_CON} -p 7070:8080 ${env.DOCKER_IMG}:v1
+                docker stop yym-calcu-container || true
+                docker rm yym-calcu-container || true
+                docker run -d --name yym-calcu-conatiner -p 7070:8080 yym-calcu-image:v1
             '''
         }    
     }
