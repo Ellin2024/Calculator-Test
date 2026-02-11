@@ -84,8 +84,8 @@ pipeline {
         steps {
             echo 'Running container locally (port 7070)...'
             sh '''
-                docker stop calculator-test || true
-                docker rm calculator-test || true
+                docker stop yym-calculator-demo || true
+                docker rm yym-calculator-demo || true
                 docker run -d --name yym-calculator-demo -p 7070:8080 yym-calculator-demo-:v1
             '''
         }    
