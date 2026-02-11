@@ -74,7 +74,7 @@ pipeline {
                     // Build Docker image and tag it with build number
                     def imageTag = "${env.BUILD_NUMBER}"
                     sh "docker build -t ${DOCKER_REPO}:${imageTag} ."
-                    sh "docker tag ${DOCKER_REPO}:${imageTag} ${DOCKER_REPO}:v1"
+                    sh "docker tag ${DOCKER_REPO}:${imageTag} yym-calculator:v1"
                     env.IMAGE_TAG = imageTag
                 }
             }
@@ -86,7 +86,7 @@ pipeline {
             sh '''
                 docker stop calculator-test || true
                 docker rm calculator-test || true
-                docker run -d --name calculator-test -p 7070:8080 calculator-test:v1
+                docker run -d --name yym-calculator-demo -p 7070:8080 yym-calculator-demo-:v1
             '''
         }    
     }
