@@ -88,7 +88,7 @@ pipeline {
                 script {
                     // Build Docker image and tag it with build number
                     def imageTag = "${env.BUILD_NUMBER}"
-                    sh "docker build -t yym-calcu-image:v1 ."
+                    sh "docker build -t ${DOCKER_IMG}:v1 ."
                     env.IMAGE_TAG = imageTag
                 }
             }
