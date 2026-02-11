@@ -7,8 +7,8 @@ pipeline {
     }
 
 	environment {
-        DOCKER_IMG = "yym-calculator-image"
-		DOCKER_CON = "yym-calculator-container"
+        DOCKER_IMG = "yym-calcu-image"
+		DOCKER_CON = "yym-calcu-container"
         APP_JAR = "target\\Calculator-v1.jar"
         DOCKER_CREDENTIALS_ID = "dockerhub-credentials"
         DOCKER_HOST_PORT = "7070"
